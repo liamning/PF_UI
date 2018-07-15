@@ -1,0 +1,54 @@
+﻿<div ng-controller="WorkerCtrl as ctrl">
+
+    <!-- <div class="row border-bottom ng-scope top-button-panel">
+
+        <ul class="pull-left nav-path font-bold">
+            <li ng-repeat="item in viewsList track by $index" ng-class="{active: templateURL['url']==item.url }">
+                <a ng-click="templateURL['url'] = item.url; templateURL.pageNo=$index;">{{item.name}}</a>
+            </li>
+        </ul>
+
+        <div class="btn-group pull-right m-t-sm" ng-show="templateURL.pageNo==0 && workerObj.WorkerID">
+            <a class="btn btn-danger" ng-click="delete()">
+                <i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</a>
+            <button class="btn btn-success" ng-click="save()">
+                <i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+        </div>
+
+    </div> -->
+
+    <div class="row border-bottom ng-scope top-button-panel">
+
+            <ul class="pull-left nav-path font-bold">
+                <li ng-repeat="item in viewsList track by $index" ng-class="{active: templateURL['url']==item.url }"><a ng-click="templateURL['url'] = item.url; templateURL.pageNo=$index;">{{item.name}}</a></li>
+            </ul>
+    
+            <div class="btn-group pull-right m-t-sm" ng-show="tabURL=='Info'">
+                <a class="btn btn-danger" ng-click="delete()"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</a>
+                <button class="btn btn-success" ng-click="save()"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+            </div>
+        
+        </div>
+
+
+    <div class="wrapper wrapper-content">
+        <div class="btn-group custom-btn-group">
+            <a class="btn btn-default {{btn1Class}}" ng-click="tabURL='Info'; btn1Class='active';btn2Class='';btn3Class='';">Personal Info</a>
+            <a ng-show="workerObj.CreateUser" class="btn btn-default {{btn2Class}}" ng-click="tabURL='Attn'; btn1Class='';btn3Class='';btn2Class='active';">Attendance</a>
+            <a ng-show="workerObj.CreateUser" class="btn btn-default {{btn3Class}}" ng-click="tabURL='Attn2'; btn1Class='';btn2Class='';btn3Class='active';">Payroll</a>
+        </div>
+
+        <form class="form-horizontal" name="userForm" autocomplete="off" novalidate>
+
+                <div ng-switch="tabURL">
+                        <worker-info ng-switch-when="Info"></worker-info>  
+                        <worker-attn ng-switch-when="Attn"></worker-info>  
+                    </div>  
+                    
+                    <worker-payroll ng-if="tabURL == 'Attn2'"></worker-info>  
+        </form>
+    </div>
+
+
+
+</div>

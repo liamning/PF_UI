@@ -1,0 +1,158 @@
+﻿
+<div ng-controller="HourlyRateMappingCtrl as ctrl">
+
+    <div class="row border-bottom ng-scope top-button-panel">
+
+        <ul class="pull-left nav-path font-bold">
+            <li ng-repeat="item in viewsList track by $index" ng-class="{active: templateURL['url']==item.url }"><a ng-click="templateURL['url'] = item.url; templateURL.pageNo=$index;">{{item.name}}</a></li>
+        </ul>
+
+        <div class="btn-group pull-right m-t-sm" ng-show="templateURL.pageNo==0">
+            <button class="btn btn-success" ng-click="save()"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+        </div>
+    </div>
+
+
+    <div class="ng-view">
+
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-11">
+                    <form class="form-horizontal" name="userForm" autocomplete="off" novalidate>
+
+                        <div class="ibox">
+
+                            <div class="ibox-content">
+
+                                <div>
+
+                                    <table class="table table-striped table-bordered inlineEditTable">
+                                        <tr>
+                                            <th width="8%">StoreCode</th>
+                                            <th width="8%">Gender</th>
+                                            <th width="8%">Timeslot</th>
+                                            <th width="8%">Interval</th>
+                                            <th width="8%">DayOfWeek</th>
+
+                                            <th>Type</th>
+                                            <th width="8%">HoursFrom</th>
+                                            <th width="8%">HoursTo</th>
+                                            <th width="8%">Rate</th>
+                                            <th width="8%">Over Hours</th>
+                                            <th width="8%">OT Rate</th>
+                                            <th style="width: 50px;"></th>
+                                        </tr>
+                                        <tr ng-repeat="item in hourlyRateMapping track by $index">
+                                            <td>
+                                                <ui-select ng-model="item.StoreCode"
+                                                           theme="bootstrap"
+                                                           required 
+                                                           reset-search-input="false"
+                                                           title="Please Select">
+                                                    <ui-select-match placeholder="Please Select">{{$select.selected.Code}}</ui-select-match>
+                                                    <ui-select-choices repeat="item.Code as item in refresh_ui_select_list['Client'] track by $index"
+                                                                       refresh="refresh_ui_select('Client', $select.search, 0, 1)"
+                                                                       refresh-delay="0">
+                                                        <div>
+                                                            <span ng-bind-html="item.Code | highlight: $select.search"></span>
+                                                        </div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+
+                                            </td>
+                                            <td>
+                                                <ui-select ng-model="item.Gender"
+                                                           theme="bootstrap"
+                                                           required
+                                                           reset-search-input="true"
+                                                           title="Please Select">
+                                                    <ui-select-match placeholder="Please Select">{{$select.selected.Desc}}</ui-select-match>
+                                                    <ui-select-choices repeat="item.Code as item in generalMaster['Gender']  | filter: $select.search">
+                                                        <div>
+                                                            <div ng-bind-html="item.Desc | highlight: $select.search"></div>
+                                                        </div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </td>
+
+                                            <td>
+
+                                                <ui-select ng-model="item.TimeSlot"
+                                                           theme="bootstrap"
+                                                           required
+                                                           reset-search-input="true"
+                                                           title="Please Select">
+                                                    <ui-select-match placeholder="Please Select">{{$select.selected.Desc}}</ui-select-match>
+                                                    <ui-select-choices repeat="item.Code as item in generalMaster['TimeSlot']  | filter: $select.search">
+                                                        <div>
+                                                            <div ng-bind-html="item.Desc | highlight: $select.search"></div>
+                                                        </div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+
+                                            </td>
+
+
+                                            <td>
+                                                <ui-select ng-model="item.Interval"
+                                                           theme="bootstrap"
+                                                           required
+                                                           reset-search-input="true"
+                                                           title="Please Select">
+                                                    <ui-select-match placeholder="Please Select">{{$select.selected.Desc}}</ui-select-match>
+                                                    <ui-select-choices repeat="item.Code as item in generalMaster['Interval']  | filter: $select.search">
+                                                        <div>
+                                                            <div ng-bind-html="item.Desc | highlight: $select.search"></div>
+                                                        </div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </td>
+
+                                            <td><input type="text" class="form-control" ng-model="item.DayOfWeek" ui-int-mask /></td>
+
+                                            <td>
+                                                <ui-select ng-model="item.Type"
+                                                           theme="bootstrap"
+                                                           required
+                                                           reset-search-input="true"
+                                                           title="Please Select">
+                                                    <ui-select-match placeholder="Please Select">{{$select.selected.Desc}}</ui-select-match>
+                                                    <ui-select-choices repeat="item.Code as item in generalMaster['Type']  | filter: $select.search">
+                                                        <div>
+                                                            <div ng-bind-html="item.Desc | highlight: $select.search"></div>
+                                                        </div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </td>
+
+                                            <td><input type="text" class="form-control" ng-model="item.HoursFrom" ui-int-mask /></td>
+                                            <td><input type="text" class="form-control" ng-model="item.HoursTo" ui-int-mask /></td>
+                                            <td><input type="text" class="form-control" ng-model="item.Rate" ui-number-mask /></td>
+                                            <td><input type="text" class="form-control" ng-model="item.OT" ui-int-mask/></td>
+                                            <td><input type="text" class="form-control" ng-model="item.OTRate" ui-number-mask /></td>
+                                            <td class="td-btn text-danger" ng-click="removeChild(child, $index)">
+                                                <span class="fa fa-trash"></span>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+
+                                <a class="btn btn-success" ng-click="addChild()"><i class="fa fa-plus"></i>&nbsp;Add</a>
+
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+

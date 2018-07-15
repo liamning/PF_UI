@@ -1,0 +1,73 @@
+﻿
+<div ng-controller="TimeslotMappingCtrl as ctrl">
+
+    <div class="row border-bottom ng-scope top-button-panel">
+
+        <ul class="pull-left nav-path font-bold">
+            <li ng-repeat="item in viewsList track by $index" ng-class="{active: templateURL['url']==item.url }"><a ng-click="templateURL['url'] = item.url; templateURL.pageNo=$index;">{{item.name}}</a></li>
+        </ul>
+
+        <div class="btn-group pull-right m-t-sm" ng-show="templateURL.pageNo==0">
+            <button class="btn btn-success" ng-click="save()"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+        </div>
+    </div>
+
+
+    <div class="ng-view">
+
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-6">
+                    <form class="form-horizontal" name="userForm" autocomplete="off" novalidate>
+
+                        <div class="ibox">
+
+                            <div class="ibox-content">
+
+                                <div>
+
+                                    <table class="table table-striped table-bordered inlineEditTable">
+                                        <tr>
+                                                <th width="60%">Description</th> 
+                                                <th >Timeslot</th>
+                                                <th width="50px"></th>
+                                            
+                                        </tr>
+                                        <tr ng-repeat="item in timeslotMapping track by $index">
+                                            <td> 
+
+                                                    <my-textbox field="item.Description"  
+                                                    />
+                                            </td>
+                                            <td>  
+
+                                                    <my-select field="item.TimeslotCode" field-desc="item.TimeSlotDesc" 
+                                                    table-name="'TimeSlot'"
+                                                    ></my-select> 
+                                            </td>
+                                            <td class="td-btn text-danger" ng-click="removeChild($index)">
+                                                    <span class="fa fa-trash"></span>
+                                                </td>
+                                        </tr>
+
+                                    </table>
+                                    <a class="btn btn-success" ng-click="addChild()"><i class="fa fa-plus"></i>&nbsp;Add</a>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+

@@ -1,0 +1,322 @@
+﻿<div ng-controller="ClientCtrl as ctrl">
+
+        <div class="row border-bottom ng-scope top-button-panel">
+
+                <ul class="pull-left nav-path font-bold">
+                    <li ng-repeat="item in viewsList track by $index" ng-class="{active: templateURL['url']==item.url }"><a ng-click="templateURL['url'] = item.url; templateURL.pageNo=$index;">{{item.name}}</a></li>
+                </ul>
+         
+            
+            </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal" name="userForm" autocomplete="off" novalidate>
+
+                    <div class="ibox">
+                        <div class="ibox-title" style="padding-top: 10px;">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4 style="margin-top:7px;margin-bottom:7px;">Client Master</h4>
+                                </div>
+                                <div class="col-lg-6 text-right">
+                                    <a class="btn btn-danger" ng-click="delete()"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</a>
+                                    <button class="btn btn-success" ng-click="save()"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-content"> 
+                            
+                            <!-- <hr> -->
+                            <!-- <div class="hr-line-dashed"></div> -->
+
+                            <div class="row">
+                                <div class="col-lg-4">
+
+                                    <div class="form-group" ng-class="{ 'has-error' : userForm.ClientCode.$invalid && submitted  }">
+                                        <label class="col-lg-4 control-label">Code</label>
+
+                                        <div class="col-lg-8">
+
+                                            <ui-select ng-model="clientObj.ClientCode" name="ClientCode" theme="bootstrap" required on-select="ui_select_change('Client'); clientIDChange();"
+                                                reset-search-input="false" title="Please Select">
+                                                <ui-select-match placeholder="Please Select">{{$select.selected.Code}}</ui-select-match>
+                                                <ui-select-choices repeat="item.Code as item in refresh_ui_select_list['Client'] track by $index" refresh="refresh_ui_select('Client', $select.search, 0, 1)"
+                                                    refresh-delay="0">
+                                                    <div>
+                                                        <span ng-bind-html="item.Code | highlight: $select.search"></span>
+                                                    </div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <p ng-show="userForm.ClientCode.$invalid && submitted" class="help-block">Code required.</p>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-4">
+
+                                    <div class="form-group" ng-class="{ 'has-error' : userForm.ClientName.$invalid && submitted  }">
+                                        <label class="col-lg-4 control-label">Name</label>
+
+                                        <div class="col-lg-8">
+
+                                            <input type="text" required class="form-control" name="ClientName" ng-model="clientObj.ClientName" />
+
+
+                                            <p ng-show="userForm.ClientName.$invalid && submitted" class="help-block">Name required.</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!-- </div>
+                             
+                            <div class="row"> -->
+                                <div class="col-lg-4">
+
+                                    <div class="form-group" ng-class="{ 'has-error' : userForm.Phone.$invalid && submitted  }">
+                                        <label class="col-lg-4 control-label">Phone</label>
+
+                                        <div class="col-lg-8">
+
+                                            <input type="text" required class="form-control" name="Phone" ng-model="clientObj.Phone" />
+
+
+                                            <p ng-show="userForm.Phone.$invalid && submitted" class="help-block">Phone required.</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4">
+
+                                    <div class="form-group" ng-class="{ 'has-error' : userForm.Fax.$invalid && submitted  }">
+                                        <label class="col-lg-4 control-label">Fax</label>
+
+                                        <div class="col-lg-8">
+                                            <input type="text" required class="form-control" name="Fax" ng-model="clientObj.Fax" />
+                                            <p ng-show="userForm.Fax.$invalid && submitted" class="help-block">Fax required.</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!-- </div>
+                             
+
+
+                            <div class="row"> -->
+                                <div class="col-lg-4">
+
+                                    <div class="form-group" ng-class="{ 'has-error' : userForm.ContactPerson.$invalid && submitted  }">
+                                        <label class="col-lg-4 control-label">Contact Person</label>
+
+                                        <div class="col-lg-8">
+
+                                            <input type="text" required class="form-control" name="ContactPerson" ng-model="clientObj.ContactPerson" />
+
+
+                                            <p ng-show="userForm.ContactPerson.$invalid && submitted" class="help-block">Contact Person required.</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4">
+
+                                    <div class="form-group" ng-class="{ 'has-error' : userForm.ContactPhone.$invalid && submitted  }">
+                                        <label class="col-lg-4 control-label">Contact Phone</label>
+
+                                        <div class="col-lg-8">
+
+                                            <input type="text" required class="form-control" name="ContactPhone" ng-model="clientObj.ContactPhone" />
+
+
+                                            <p ng-show="userForm.ContactPhone.$invalid && submitted" class="help-block">Contact Person required.</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!-- </div>
+
+                            <div class="row"> -->
+
+                                <div class="col-lg-8">
+
+                                    <div class="form-group" ng-class="{ 'has-error' : userForm.Address.$invalid && submitted  }">
+                                        <label class="col-lg-2 control-label">Address</label>
+
+                                        <div class="col-lg-10">
+                                            <textarea required class="form-control" name="Address" ng-model="clientObj.Address"></textarea>
+                                            <p ng-show="userForm.Address.$invalid && submitted" class="help-block">Worker ID required.</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="hr-line-dashed"></div>
+
+
+                            <div>
+                                <table class="table table-striped table-bordered inlineEditTable">
+                                    <tr>
+                                            <th width="30px;"></th>
+                                            <th>BU</th>
+                                        <th width="60%">Location</th>
+                                        <th width="50px;"></th>
+                                    </tr>
+                                    <tr ng-repeat="bu in clientObj.BUList">
+                                    
+                                        <td>
+                                            <label>
+                                                <input icheck type="radio" name='selected'  ng-model="clientObj.CurrentBU" value="{{bu.RowNo}}"/>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="bu.BU" />
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="bu.Location" />
+                                        </td>
+                                    
+                                        <td class="td-btn text-danger" ng-click="deleteBU($index)">
+                                            <span class="fa fa-trash"></span>
+                                        </td>
+                                    </tr>
+                                </table>
+ 
+                                <a class="btn btn-default" ng-click="addBU()"><i class="fa fa-plus"></i>&nbsp;Add</a>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="ibox">
+                        <div class="ibox-title" style="padding-top: 10px;">
+                            <div class="row">
+                                <div class="col-lg-4"> 
+                                        <h4 style="margin-top:7px;margin-bottom:7px;">Worker Hourly Rate</h4>
+                                    </div> 
+                                <div class="col-lg-8">
+                                        <a class="btn btn-success" style="float: right;" ng-click="saveRate();"><i class="fa fa-save"></i>&nbsp Save</a>
+                                        <a class="btn btn-warning" style="float: right; margin-right: 5px;" ng-click="getRate();"><i class="fa fa-refresh"></i>&nbsp Refresh</a>
+                                        
+                                        <div style="display: block; float:right; margin-right: 5px;">
+                                        
+                                            <ui-select ng-model="clientObj.PositionGrade" title="Position Grade" style="width: 200px;">
+                                                <ui-select-match placeholder="Position Grade">{{$select.selected.Desc}}</ui-select-match>
+                                                <ui-select-choices repeat="item.Code as item in generalMaster['PositionGrade'] track by $index">
+                                                    <div>
+                                                        <span ng-bind-html="item.Desc | highlight: $select.search"></span>
+                                                    </div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class="ibox-content">
+                                <!-- <div class="hr-line-dashed"></div> -->
+                                <!-- <hr> -->
+                                <div> 
+
+                                    <table class="table table-striped table-bordered inlineEditTable" ng-if="hourlyRateMapping">
+                                        <tr>
+                                            <!-- <th width="8%">StoreCode</th> -->
+                                            <th width="8%">Gender</th>
+                                            <th width="8%">Timeslot</th>
+                                            <th width="8%">Interval</th>
+                                            <th width="8%">DayOfWeek</th>
+
+                                            <th>Type</th>
+                                            <th width="8%">HoursFrom</th>
+                                            <th width="8%">HoursTo</th>
+                                            <th width="8%">Rate</th>
+                                            <th width="8%">Over Hours</th>
+                                            <th width="8%">OT Rate</th>
+                                            <th style="width: 50px;"></th>
+                                        </tr> 
+                                        <tr ng-repeat="item in hourlyRateMapping track by $index">
+                                            <!-- <td> 
+                                                <my-async-select field="item.StoreCode"  
+                                                table-name="'Client'"
+                                                ></my-async-select>
+
+                                            </td> -->
+                                            <td> 
+                                                    <my-select field="item.Gender" field-desc="item.GenderDesc" 
+                                                    table-name="'Gender'"
+                                                    ></my-select>  
+                                            </td>
+
+                                            <td>
+
+                                                    <my-select field="item.TimeSlot" field-desc="item.TimeSlotDesc" 
+                                                    table-name="'TimeSlot'"
+                                                    ></my-select> 
+                                                
+                                            </td>
+
+
+                                            <td>
+                                                    <my-select field="item.Interval" field-desc="item.IntervalDesc" 
+                                                    table-name="'Interval'"
+                                                    ></my-select> 
+                                                 
+                                            </td>
+
+                                            <td>
+                                                    <my-int field="item.DayOfWeek"></my-int>  
+
+                                            <td>
+                                                    <my-select field="item.Type"  field-desc="item.TypeDesc" 
+                                                    table-name="'Type'"
+                                                    ></my-select> 
+                                                    
+                                            </td>
+
+                                            <td><my-int  field="item.HoursFrom"  /></td>
+                                            <td><my-int  field="item.HoursTo"  /></td>
+                                            <td><my-number  field="item.Rate"   /></td>
+                                            <td><my-int  field="item.OT" /></td>
+                                            <td><my-number  field="item.OTRate"  /></td>
+
+                                            <td class="td-btn text-danger" ng-click="removeRate(child, $index)">
+                                                <span class="fa fa-trash"></span>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                    <a class="btn btn-default" ng-click="addRate()"><i class="fa fa-plus"></i>&nbsp;Add</a>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                </form>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+</div>

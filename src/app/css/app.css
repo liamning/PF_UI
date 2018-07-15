@@ -1,0 +1,111 @@
+/* @import url("./animated.css");
+@import url("./style.css"); */
+/* .bootstrap-datetimepicker-widget.dropdown-menu {
+    margin: 2px 0;
+    padding: 4px;
+    width: 19em;
+    display: block;
+} */
+
+.paginate_button  {
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    color: inherit;
+    
+    line-height: 1.42857;
+    margin-left: -1px;
+    padding: 4px 10px;
+    position: relative;
+    text-decoration: none;
+}
+
+.dataTables_paginate .disabled  {
+    cursor: no-drop;
+    color:  gray;
+ }
+ .dataTables_paginate .current  {
+    background-color: #EEEEEE;
+ }
+
+ @media (min-width: 768px){
+
+    #page-wrapper {
+        position: inherit;
+        margin: 0 0 0 250px;
+        min-height: 100vh;
+    }
+ }
+
+ 
+    .sidebar-nav ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+
+.sidebar-nav ul a {
+    padding: 12px 20px;
+    color: #aaa;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.05) inset;
+    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+}
+
+    .sidebar-nav ul a:active {
+        padding: 14px 18px 10px 22px !important;
+    }
+
+.sidebar-nav ul ul a:active {
+    padding: 14px 0px 10px 32px !important;
+}
+
+
+.sidebar-nav ul a:hover, .sidebar-nav ul a:focus, .sidebar-nav ul a:active, .sidebar-nav ul li a.active {
+    color: #fff;
+    text-decoration: none;
+    background-color: rgb(103, 60, 123) !important;
+}
+
+.nav > li.active > a {
+    color: #ffffff;
+    background-color: rgb(103, 60, 123) !important;
+}
+
+.metismenu li a:hover, .metismenu li a:focus, .metismenu li a.active {
+    border-left: 0px solid #19aa8d;
+    background-color: rgb(103, 60, 123) !important;
+}
+
+.sidebar-nav ul ul a {
+    padding: 12px 30px !important;
+    background-color: #380052;
+}
+
+.nav-second-level li:last-child {
+    margin-bottom: 0px;
+}
+
+.sidebar-nav-item {
+    padding-left: 5px;
+}
+
+.sidebar-nav-item-icon {
+    padding-right: 5px;
+}
+ 
+
+.iradio_square-green{
+    margin-top: 3px;
+}
+
+.unfold{
+    display: block;
+}
+
+.ibox-title {
+    border-color: #e7eaec;
+    border-image: none;
+    border-style: solid solid none;
+    border-width: 1px 0 0;
+}

@@ -1,0 +1,33 @@
+<div class="row">
+    <nav class="navbar navbar-fixed-top top_navi_bg no-borders no-margins" role="navigation" style="margin-bottom: 0;   padding: 0px 0px 0px 10px;">
+        <div class="navbar-header">
+            <span minimaliza-sidebar></span>
+        </div>
+        <ul class="nav navbar-top-links navbar-header">
+            <li>
+                <a href="" style="font-size: 18px;line-height:60px; padding: 0px; font-weight:bold;">
+                    <span class="text-white">Payroll & Attendance</span>
+                </a>
+            </li>
+        </ul>
+
+        <ul class="nav navbar-top-links navbar-right">
+            <li style="margin-left: 50px;">
+                <img style="position: absolute; top:-18px; left: -35px;" alt="image" class="img-circle" src="img/employee-136.png" />
+            </li>
+            <li>
+                <a ng-click="showPullDown = !showPullDown;">
+                    <span>
+                        <strong class="font-bold">{{loginInfo.UserID}} <b class="caret"></b></strong>
+                    </span>
+                </a>
+                <ul class="m-t-xs dropdown-menu" ng-show="showPullDown" style="display:block;">
+                    <li><a ui-sref="system.UserProfile">User Profile</a></li>
+                    <li><a ui-sref="system.ChangePassword">Change Password</a></li>
+                    <li class="divider"></li>
+                    <li><a href="HttpHandler/LogOutHandler.ashx">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>

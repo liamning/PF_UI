@@ -1,0 +1,148 @@
+﻿
+<div ng-controller="TimeSlotCtrl as ctrl">
+
+    <div class="row border-bottom ng-scope top-button-panel">
+
+        <ul class="pull-left nav-path font-bold">
+            <li ng-repeat="item in viewsList track by $index" ng-class="{active: templateURL['url']==item.url }"><a ng-click="templateURL['url'] = item.url; templateURL.pageNo=$index;">{{item.name}}</a></li>
+        </ul>
+
+        <div class="btn-group pull-right m-t-sm" ng-show="templateURL.pageNo==0">
+            <a class="btn btn-danger" ng-click="delete()"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</a>
+            <button class="btn btn-success" ng-click="save()"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+        </div>
+    
+    </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-11">
+                <form class="form-horizontal" name="userForm" autocomplete="off" novalidate>
+
+                    <div class="ibox">
+
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="col-lg-6">
+
+                                    <div class="form-group"  ng-class="{ 'has-error' : userForm.TimeSlotCode.$invalid && submitted  }">
+                                        <label class="col-lg-4 control-label">Code</label>
+
+                                        <div class="col-lg-8">
+
+                                            <ui-select ng-model="timeSlotObj.TimeSlotCode"
+                                                       name="TimeSlotCode"
+                                                       theme="bootstrap"
+                                                       required
+                                                       on-select="ui_select_change('TimeSlot'); timeSlotIDChange();"
+                                                       reset-search-input="false"
+                                                       title="Please Select">
+                                                <ui-select-match placeholder="Please Select">{{$select.selected.Code}}</ui-select-match>
+                                                <ui-select-choices repeat="item.Code as item in refresh_ui_select_list['TimeSlot'] track by $index"
+                                                                   refresh="refresh_ui_select('TimeSlot', $select.search, 0, 1)"
+                                                                   refresh-delay="0">
+                                                    <div>
+                                                        <span ng-bind-html="item.Code | highlight: $select.search"></span>
+                                                    </div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <p ng-show="userForm.TimeSlotCode.$invalid && submitted" class="help-block">Code required.</p>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+
+                                    <div class="form-group" ng-class="{ 'has-error' : userForm.TimeSlotType.$invalid && submitted  }">
+                                        <label class="col-lg-4 control-label">Type</label>
+
+                                        <div class="col-lg-8"> 
+
+                                            <ui-select ng-model="timeSlotObj.TimeSlotType"
+                                                       theme="bootstrap"
+                                                       required
+                                                       reset-search-input="true"
+                                                       title="Please Select">
+                                                <ui-select-match placeholder="Please Select">{{$select.selected.Desc}}</ui-select-match>
+                                                <ui-select-choices repeat="item.Code as item in generalMaster['TimeSlotType']  | filter: $select.search">
+                                                    <div>
+                                                        <div ng-bind-html="item.Desc | highlight: $select.search"></div>
+                                                    </div>
+                                                </ui-select-choices>
+                                            </ui-select>
+
+
+                                            <p ng-show="userForm.TimeSlotType.$invalid && submitted" class="help-block">Type required.</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Description</label>
+
+                                        <div class="col-lg-8">
+                                            <input type="text" required class="form-control" name="TimeSlotDesc" ng-model="timeSlotObj.TimeSlotDesc" />
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+
+                                    <div class="form-group" ng-class="{ 'has-error' : userForm.HourRate.$invalid && submitted }" >
+                                        <label class="col-lg-4 control-label">Hour Rate</label>
+
+                                        <div class="col-lg-8">
+                                            <input type="text" ui-number-mask class="form-control" name="HourRate" ng-model="timeSlotObj.HourRate"  required />
+                                            <p ng-show="userForm.HourRate.$invalid && submitted" class="help-block">Hour Rate required.</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Remarks</label>
+
+                                        <div class="col-lg-8">
+                                            <textarea class="form-control" ng-model="timeSlotObj.Remarks"></textarea>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+</div>

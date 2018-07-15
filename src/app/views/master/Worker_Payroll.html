@@ -1,0 +1,164 @@
+﻿<div class="row" ng-controller="PayrollCtrl as ctrl">
+    <div class="col-lg-11">
+        <form class="form-horizontal" name="userForm" autocomplete="off" novalidate>
+
+            <div class="ibox">
+
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">員工編號</label>
+
+                                <div class="col-lg-8">
+
+                                    <input class="form-control" ng-model="workerObj.WorkerID" readonly />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">As at</label>
+                                <div class="col-lg-8">
+
+                                    <div class="input-group date">
+                                        <input class="form-control" ng-model="AsAt" required date-picker>
+                                        <a class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Salary Date</label>
+                                <div class="col-lg-8">
+
+
+
+                                    <ui-select ng-model="workerObj.criteria.SalaryDate" name="SalaryDate" theme="bootstrap" on-select="ui_select_change('SalaryDate');getPayroll() "
+                                        reset-search-input="false" title="Please Select">
+                                        <ui-select-match placeholder="Please Select">{{$select.selected.Desc}}</ui-select-match>
+                                        <ui-select-choices repeat="item.Code as item in refresh_ui_select_list['SalaryDate'] track by $index" refresh="refresh_ui_select('SalaryDate', $select.search, 0)"
+                                            refresh-delay="0">
+                                            <div>
+                                                <span ng-bind-html="item.Desc | highlight: $select.search"></span>
+                                            </div>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 text-right">
+                            <!-- <a class="btn btn-info" ng-click="getPayroll();">
+                                <span class="fa fa-search"></span>&nbsp; View</a> -->
+
+                            <a class="btn btn-success" ng-click="savePayroll();">
+                                <span class="fa fa-save"></span>&nbsp; Save</a>
+                        </div>
+                    </div>
+
+
+                    <div class="hr-line-dashed"></div>
+                    
+                    <span class="label label-danger" style="font-size: 12px;" ng-show="(workerObj.criteria.SalaryDate && !payrollObj.length)">Record Not Found</span>
+
+                    <div ng-show="payrollObj && payrollObj.length">
+                       
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h4>Payroll Summary</h4>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                            </div>
+                        </div>
+                        <table class="table table-striped table-bordered">
+
+                            <tr>
+                                <th>Salary Date</th>
+                                <th>Pay from</th>
+                                <th>Pay To</th>
+                                <th>Total Hours</th>
+                                <th>OT Hours</th>
+                                <th>Total Amount</th>
+                            </tr>
+                            <tr ng-repeat="item in payrollObj track by $index">
+                                <td>{{item.SalaryDate}}</td>
+                                <td>{{item.PayFrom}}</td>
+                                <td>{{item.PayTo}}</td>
+                                <td>{{item.Hours}}</td>
+                                <td>{{item.OTHours}}</td>
+                                <td align="right">{{item.Amount | currency: ' '}}</td>
+                            </tr>
+                        </table>
+
+
+
+                        <h4>Payroll Items</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+
+                                <table class="table table-striped table-bordered inlineEditTable">
+
+                                    <tr>
+                                        <!-- <th>WorkerID</th>
+                <th>SalaryDate</th>
+                <th>RowNo</th> -->
+                                        <th width="30%">Item Code</th>
+                                        <th>Description</th>
+                                        <th width="25%">Amount</th>
+                                        <th width="40px"></th>
+                                    </tr>
+                                    <tr ng-repeat="item in payrollObj[0].PayrollItemList track by $index">
+                                        <!-- <td>{{item.WorkerID}}</td>
+                <td>{{item.SalaryDate}}</td>
+                <td>{{item.RowNo}}</td> -->
+                                        <td>
+                                            <input class="form-control" ng-model="item.ItemCode" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" ng-model="item.Description" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" ng-blur="calSummary()" ng-model="item.Amount" ui-number-mask /> </td>
+                                        <td class="td-btn text-danger" ng-click="removeItem($index)">
+                                            <span class="fa fa-trash"></span>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <a class="btn btn-default" ng-click="addItem();">
+                                    <span class="fa fa-plus"></span>&nbsp; Add</a>
+
+
+                                <!-- <div class="row">
+                                    <div class="col-lg-12 text-right">
+    
+                                    </div>
+                                </div>
+                            </div> -->
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+        </form>
+        </div>
+
+    </div>

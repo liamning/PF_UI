@@ -1,0 +1,55 @@
+﻿
+<div class="row" ng-controller="PayrollCtrl as ctrl" >
+    <div class="col-lg-11">
+        <form class="form-horizontal" name="userForm" autocomplete="off" novalidate>
+
+            <div class="ibox">
+
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">As at</label>
+                                <div class="col-lg-8">
+
+                                    <div class="input-group date">
+                                        <input  class="form-control" name="DOB"
+                                               ng-model="payrollObj.DOB" date-picker><a class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </a>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Remarks</label>
+                                <div class="col-lg-8">
+
+                                    <input class="form-control" ng-model="payrollObj.Remarks" />
+                                  
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+
+                    <div class="text-right"> 
+                        <a class="btn btn-success" ng-click="search();"><span class="fa fa-refresh"></span>&nbsp; Refresh</a>
+                    </div>
+  
+
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+
+</div>

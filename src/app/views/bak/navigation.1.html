@@ -1,0 +1,110 @@
+﻿<nav class="navbar-static-side sidebar-nav" role="navigation">
+    <div>
+
+        <ul side-navigation class="nav" >
+
+            <li ui-sref-active="active">
+                <a ui-sref="index.main">
+                    <span class="fa fa-home"></span>
+                    <span class="sidebar-nav-item">Home</span>
+                </a>
+            </li>
+
+
+            <li ng-class="{active: loginInfo.includeMaster}">
+                <a>
+                    <span class="fa fa-folder"></span>
+                    <span class="sidebar-nav-item">Master</span>
+                    <span class="fa arrow"></span>
+                </a>
+
+                <ul class="nav nav-second-level"> 
+                    <li ui-sref-active="active">
+                        <a ui-sref="index.master.HourlyRateMapping"><span class="nav-label">Hourly Rate Mapping</span></a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="index.master.PayrollGroup"><span class="nav-label">Payroll Group</span></a>
+                    </li>
+
+                    <li ui-sref-active="active">
+                        <a ui-sref="index.master.Introducer"><span class="nav-label">Introducer</span></a>
+                    </li>
+
+                    <li ui-sref-active="active">
+                        <a ui-sref="index.master.Client"><span class="nav-label">Client</span></a>
+                    </li>
+
+                    <li ui-sref-active="active">
+                        <a ui-sref="index.master.Worker"><span class="nav-label">Worker</span></a>
+                    </li>
+
+                </ul>
+            </li>
+ 
+
+            <li ng-class="{active: loginInfo.includeImport}">
+                <a>
+                    <span class="fa fa-upload"></span>
+                    <span class="sidebar-nav-item">Import</span>
+                    <span class="fa arrow"></span>
+                </a>
+
+                <ul class="nav nav-second-level">
+                    <li ui-sref-active="active">
+                        <a ui-sref="index.import.Attendance"><span class="nav-label">Attendance</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li ng-class="{active: loginInfo.includeInquiry}">
+                <a>
+                    <span class="fa fa-search"></span>
+                    <span class="sidebar-nav-item">Inquiry</span>
+                    <span class="fa arrow"></span>
+                </a>
+
+                <ul class="nav nav-second-level">
+                    <li ui-sref-active="active">
+                        <a ui-sref="index.inquiry.Inquiry"><span class="nav-label">Worker</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li ng-class="{active: loginInfo.includeReport}">
+                <a>
+                    <span class="fa fa-area-chart"></span>
+                    <span class="sidebar-nav-item">Report</span>
+                    <span class="fa arrow"></span>
+                </a>
+
+                <ul class="nav nav-second-level">
+                    <li ui-sref-active="active">
+                        <a ui-sref="index.report.attendance"><span class="nav-label">Attendance</span></a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li ng-class="{active: loginInfo.includeSystem}">
+                <a>
+                    <span class="fa fa-cog"></span>
+                    <span class="sidebar-nav-item">System</span>
+                    <span class="fa arrow"></span>
+                </a>
+
+                <ul class="nav nav-second-level">
+                    <li ui-sref-active="active">
+                        <a ui-sref="index.system.UserProfile"><span class="nav-label">User Profile</span></a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="index.system.ChangePassword"><span class="nav-label">Change Password</span></a>
+                    </li>
+
+                </ul>
+            </li>
+
+        </ul>
+
+
+    </div>
+</nav>

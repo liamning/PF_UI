@@ -1,0 +1,72 @@
+﻿
+<div class="row" ng-controller="AttendanceInquiryCtrl as ctrl" >
+    <div class="col-lg-11">
+        <form class="form-horizontal" name="userForm" autocomplete="off" novalidate>
+
+            <div class="ibox">
+
+                <div class="ibox-content inquiry">
+
+                    <div class="row">
+                        <div class="col-lg-6" ng-repeat="criteria in workerObj.criterias">
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">{{criteria.displayName}}</label>
+                                <div class="col-lg-8">
+
+                                    <input ng-model="criteria.value" class="form-control" date-picker ng-disabled="criteria.disable"
+                                           ng-if="criteria.type=='date'" />
+
+                                    <input ng-model="criteria.value" class="form-control" ng-disabled="criteria.disable"
+                                           ng-if="!criteria.type" />
+
+                                    <ui-select ng-model="criteria.value"
+                                               theme="bootstrap"
+                                               ng-if="criteria.type=='select'" ng-disabled="criteria.disable"
+                                               on-select="ui_select_change(criteria.table); clientIDChange();"
+                                               reset-search-input="false"
+                                               title="Please Select">
+                                        <ui-select-match placeholder="Please Select">{{$select.selected.Code}}</ui-select-match>
+                                        <ui-select-choices repeat="item.Code as item in refresh_ui_select_list[criteria.table] track by $index"
+                                                           refresh="refresh_ui_select(criteria.table, $select.search, 0, 1)"
+                                                           refresh-delay="0">
+                                            <div>
+                                                <span ng-bind-html="item.Code | highlight: $select.search"></span>
+                                            </div>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                </div>
+                            </div>
+                        </div><br />
+                    </div>
+
+                    <div class="text-right"> 
+                        <a class="btn btn-success" ng-click="search();"><span class="fa fa-refresh"></span>&nbsp; Refresh</a>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                    <span class="label label-danger" style="font-size: 12px;" ng-show="!workerObj.attendance.length">Record Not Found</span>
+                    <table class="table table-striped table-bordered" ng-show="workerObj.attendance.length">
+                        <tr>
+                            <th ng-repeat="(key, value) in workerObj.header">{{key}}</th>
+                         
+                        </tr>
+                        <tr ng-repeat="data in workerObj.attendance">
+                            <td ng-repeat="(key, value) in data">
+                                {{::value}}
+                            </td> 
+                        </tr>
+
+                    </table>
+
+
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+
+</div>
