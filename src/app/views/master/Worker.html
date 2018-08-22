@@ -34,8 +34,8 @@
     <div class="wrapper wrapper-content">
         <div class="btn-group custom-btn-group">
             <a class="btn btn-default {{btn1Class}}" ng-click="tabURL='Info'; btn1Class='active';btn2Class='';btn3Class='';">Personal Info</a>
-            <a ng-show="workerObj.CreateUser" class="btn btn-default {{btn2Class}}" ng-click="tabURL='Attn'; btn1Class='';btn3Class='';btn2Class='active';">Attendance</a>
-            <a ng-show="workerObj.CreateUser" class="btn btn-default {{btn3Class}}" ng-click="tabURL='Attn2'; btn1Class='';btn2Class='';btn3Class='active';">Payroll</a>
+            <a ng-show="workerObj.ClientList.length" class="btn btn-default {{btn2Class}}" ng-click="tabURL='Attn'; btn1Class='';btn3Class='';btn2Class='active';">Attendance</a>
+            <a ng-show="workerObj.ClientList.length" class="btn btn-default {{btn3Class}}" ng-click="tabURL='Attn2'; btn1Class='';btn2Class='';btn3Class='active';">Payroll</a>
         </div>
 
         <form class="form-horizontal" name="userForm" autocomplete="off" novalidate>

@@ -10,8 +10,10 @@ const host = window.host;
 
 const getCheckDigitNumber = function (letter) {
     var result = letter.charCodeAt(0) - 55;
+    if(result < 10) return letter;
     return result;
 }
+
 
 const hkIDCheckDigit = function (hkID) {
     var firstLetter;
@@ -53,12 +55,13 @@ const hkIDCheckDigit = function (hkID) {
 
     checkDigitCal = 11 - checkDigitCal % 11;
 
-    if (checkDigitCal != checkDigit) {
+    console.log(`${checkDigitCal} = ${checkDigit}`);
+
+    if (checkDigitCal != getCheckDigitNumber(checkDigit)) {
         alert("HKID invalid");
         return false;
     }
 
-    console.log(`${checkDigitCal} = ${checkDigit}`);
 
     return true;
 
@@ -72,7 +75,7 @@ export function MainCtrl($scope, $state, $http, $rootScope) {
     //$scope.main={name:'123123'};
 
     $scope.refresh_ui_select_list = {};
-    $scope.refresh_ui_select = function (table, input, limit, includeInput, callback) {
+    $scope.refresh_ui_select = function (table, input, limit, includeInput, callback, defaultInput) {
         if (limit && (!input || input.length < limit)) return;
         $http({
             method: 'POST', withCredentials: true,
@@ -85,11 +88,44 @@ export function MainCtrl($scope, $state, $http, $rootScope) {
 
             if (response) {
                 $scope.refresh_ui_select_list[table] = response;
-                if (response && input && includeInput)
-                    response.unshift({
-                        'Code': input,
-                        'Desc': input,
-                    });
+                
+                var exists =  false;
+                if(response && defaultInput){ 
+                    for(var i=0, item;item = response[i]; i++){
+                        if(item.Code == defaultInput){
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if(!exists){ 
+                        if(defaultInput == "All"){
+                            response.unshift({
+                                'Code': '',
+                                'Desc': 'All',
+                            });
+                        }else 
+                        response.unshift({
+                            'Code': defaultInput,
+                            'Desc': defaultInput,
+                        });
+                    }
+                }
+
+                if (response && input && includeInput){
+                    exists =  false;
+                    for(var i=0, item;item = response[i]; i++){
+                        if(item.Code == input){
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if(!exists){ 
+                        response.unshift({
+                            'Code': input,
+                            'Desc': input,
+                        });
+                    }
+                }
             }
             if (callback)
                 callback(response);
@@ -102,14 +138,14 @@ export function MainCtrl($scope, $state, $http, $rootScope) {
 
 
     $scope.generalMaster = {};
-    $scope.getGeneralMasterList = function (categories, callback) {
-        var index;
-        for (var pro in $scope.generalMaster) {
-            index = categories.indexOf(pro);
-            if (index >= 0) {
-                categories.splice(index, 1);
-            }
-        }
+    $scope.getGeneralMasterList = function (categories, callback, defaultInput) {
+        var index, pro;
+        // for (var pro in $scope.generalMaster) {
+        //     index = categories.indexOf(pro);
+        //     if (index >= 0) {
+        //         categories.splice(index, 1);
+        //     }
+        // }
 
         if (categories.length == 0) return;
 
@@ -125,6 +161,12 @@ export function MainCtrl($scope, $state, $http, $rootScope) {
                 for (pro in response) {
                     if ($scope.generalMaster[pro]) $scope.generalMaster[pro].length = 0;
                     $scope.generalMaster[pro] = response[pro];
+                    if(defaultInput == "All"){
+                        $scope.generalMaster[pro].unshift({
+                            Code: '',
+                            Desc: "All"
+                        });
+                    }
                 }
                 //console.log($scope.generalMaster);
             }
@@ -595,7 +637,7 @@ export function WorkerCtrl($scope, $http, $document, $timeout, $rootScope, $stat
     })();
 
 
-    $scope.refresh_ui_select = function (table, input, limit, includeInput, callback, clientCode) {
+    $scope.refresh_ui_select = function (table, input, limit, includeInput, callback, clientCode, defaultInput) {
         if (limit && (!input || input.length < limit)) return;
         var action = "refreshList";
         if (clientCode) action = "refreshBUList";
@@ -613,11 +655,39 @@ export function WorkerCtrl($scope, $http, $document, $timeout, $rootScope, $stat
                     $scope.refresh_ui_select_list[table + clientCode] = response;
                 else
                     $scope.refresh_ui_select_list[table] = response;
-                if (response && input && includeInput)
-                    response.unshift({
-                        'Code': input,
-                        'Desc': input,
-                    });
+                
+                    
+                var exists =  false;
+                if(response && defaultInput){ 
+                    for(var i=0, item;item = response[i]; i++){
+                        if(item.Code == defaultInput){
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if(!exists){ 
+                        response.unshift({
+                            'Code': defaultInput,
+                            'Desc': defaultInput,
+                        });
+                    }
+                }
+
+                if (response && input && includeInput){
+                    exists =  false;
+                    for(var i=0, item;item = response[i]; i++){
+                        if(item.Code == input){
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if(!exists){ 
+                        response.unshift({
+                            'Code': input,
+                            'Desc': input,
+                        });
+                    }
+                }
             }
             if (callback)
                 callback(response);
@@ -1258,7 +1328,7 @@ export function InquiryCtrl($scope, $http, $document, $timeout, $rootScope, $sta
 
         $scope.view = "V_Worker";
 
-        $scope.getGeneralMasterList(["WorkerType", "PositionGrade", "WorkerStatus", "AppraisalGrade", "CardStatus", "District", "PayrollMethod"]);
+        $scope.getGeneralMasterList(["WorkerType", "PositionGrade", "WorkerStatus", "AppraisalGrade", "CardStatus", "District", "PayrollMethod"], '', "All");
 
     })();
 

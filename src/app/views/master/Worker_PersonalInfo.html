@@ -19,7 +19,7 @@
                                     <ui-select ng-model="workerObj.WorkerID" name="WorkerID" theme="bootstrap" on-select="ui_select_change('Worker'); workerIDChange();"
                                         reset-search-input="false" title="Please Select">
                                         <ui-select-match placeholder="Please Select">{{$select.selected.Code}}</ui-select-match>
-                                        <ui-select-choices repeat="item.Code as item in refresh_ui_select_list['Worker'] track by $index" refresh="refresh_ui_select('Worker', $select.search, 0, 1)"
+                                        <ui-select-choices repeat="item.Code as item in refresh_ui_select_list['Worker'] track by $index" refresh="refresh_ui_select('Worker', $select.search, 0, 1, '','', workerObj.WorkerID)"
                                             refresh-delay="0">
                                             <div>
                                                 <span ng-bind-html="item.Code | highlight: $select.search"></span>
@@ -45,7 +45,7 @@
                                     <ui-select ng-model="workerObj.Introducer" name="Introducer" theme="bootstrap" on-select="ui_select_change('Introducer'); "
                                         reset-search-input="false" title="Please Select">
                                         <ui-select-match placeholder="Please Select">{{$select.selected.Code}}</ui-select-match>
-                                        <ui-select-choices repeat="item.Code as item in refresh_ui_select_list['Introducer'] track by $index" refresh="refresh_ui_select('Introducer', $select.search, 0)"
+                                        <ui-select-choices repeat="item.Code as item in refresh_ui_select_list['Introducer'] track by $index" refresh="refresh_ui_select('Introducer', $select.search, 0, '','','', workerObj.Introducer)"
                                             refresh-delay="0">
                                             <div>
                                                 <span ng-bind-html="item.Code | highlight: $select.search"></span>
@@ -224,32 +224,7 @@
                             </div>
 
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-6">
-
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label">Bank Code</label>
-
-                                <div class="col-lg-8">
-                                    <input class="form-control" ng-model="workerObj.BankCode" />
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-6">
-
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label">Bank Name</label>
-
-                                <div class="col-lg-8">
-                                    <input class="form-control" ng-model="workerObj.BankName" />
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+                    </div> 
 
                     <div class="row">
                         <div class="col-lg-6">
@@ -276,6 +251,41 @@
 
                                 <div class="col-lg-8">
                                     <input class="form-control" ng-model="workerObj.WorkArea" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Bank Code</label>
+
+                                <div class="col-lg-8">
+                                    <input class="form-control" ng-model="workerObj.BankCode" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Bank Name</label>
+
+                                <div class="col-lg-8">
+                                    <input class="form-control" ng-model="workerObj.BankName" />
+                                </div>
+                            </div>
+
+                        </div> 
+
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Bank Account No.</label>
+
+                                <div class="col-lg-8">
+                                    <input class="form-control {{beneficialClass}}" ng-model="workerObj.BankACNo" />
                                 </div>
                             </div>
 
@@ -430,6 +440,19 @@
                             </div>
 
                         </div>
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label"></label>
+
+                                <div class="col-lg-8">
+                                    <label class="checkbox-inline">
+                                        <input icheck type="checkbox" name="MPFOption" ng-model="workerObj.MPFOption" value="F">&nbsp; 需要MPF?
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
 
 
@@ -441,19 +464,6 @@
 
                                 <div class="col-lg-8">
                                     <textarea class="form-control" ng-model="workerObj.Remarks"></textarea>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-6">
-
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label"></label>
-
-                                <div class="col-lg-8">
-                                    <label class="checkbox-inline">
-                                        <input icheck type="checkbox" name="MPFOption" ng-model="workerObj.MPFOption" value="F">&nbsp; 需要MPF?
-                                    </label>
                                 </div>
                             </div>
 

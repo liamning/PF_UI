@@ -37,7 +37,7 @@
                                                            title="Please Select">
                                                     <ui-select-match placeholder="Please Select">{{$select.selected.Desc}}</ui-select-match>
                                                     <ui-select-choices repeat="item.Code as item in refresh_ui_select_list[criteria.table] track by $index"
-                                                                       refresh="refresh_ui_select(criteria.table, $select.search, 0, 1)"
+                                                                       refresh="refresh_ui_select(criteria.table, $select.search, 0, 1, '', 'All')"
                                                                        refresh-delay="0">
                                                         <div>
                                                             <span ng-bind-html="item.Desc | highlight: $select.search"></span>
