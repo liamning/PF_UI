@@ -10492,3 +10492,8 @@ table.inlineEditTable td.td-btn span {
     border: 0px;
     margin-top: 100px;
 }
+
+.mustFill::after {
+    content: '*'; padding-left: 8px;
+    color: red; /* Or a color you prefer */
+}

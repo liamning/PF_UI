@@ -12,14 +12,14 @@
                         <div class="col-lg-6">
 
                             <div class="form-group" ng-class="{ 'has-error' : userForm.WorkerID.$invalid && submitted  }">
-                                <label class="col-lg-4 control-label">員工編號</label>
+                                <label class="col-lg-4 control-label {{mustFill['WorkerID']}}">員工編號</label>
 
                                 <div class="col-lg-8">
 
                                     <ui-select ng-model="workerObj.WorkerID" name="WorkerID" theme="bootstrap" on-select="ui_select_change('Worker'); workerIDChange();"
                                         reset-search-input="false" title="Please Select">
                                         <ui-select-match placeholder="Please Select">{{$select.selected.Code}}</ui-select-match>
-                                        <ui-select-choices repeat="item.Code as item in refresh_ui_select_list['Worker'] track by $index" refresh="refresh_ui_select('Worker', $select.search, 0, 1, '','', workerObj.WorkerID)"
+                                        <ui-select-choices repeat="item.Code as item in refresh_ui_select_list['Worker'] track by $index" refresh="refresh_ui_select('Worker', $select.search, 0, 0, '','', workerObj.WorkerID)"
                                             refresh-delay="0">
                                             <div>
                                                 <span ng-bind-html="item.Code | highlight: $select.search"></span>
@@ -38,7 +38,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Introducer</label>
+                                <label class="col-lg-4 control-label {{mustFill['Introducer']}}">Introducer</label>
 
                                 <div class="col-lg-8">
 
@@ -64,7 +64,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">中文姓名</label>
+                                <label class="col-lg-4 control-label {{mustFill['ChineseName']}}">中文姓名</label>
 
                                 <div class="col-lg-8">
                                     <input type="text" class="form-control" name="ChineseName" ng-model="workerObj.ChineseName" />
@@ -76,7 +76,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">英文姓名</label>
+                                <label class="col-lg-4 control-label {{mustFill['EnglishName']}}">英文姓名</label>
 
                                 <div class="col-lg-8">
                                     <input type="text" class="form-control" name="EnglishName" ng-model="workerObj.EnglishName" />
@@ -92,7 +92,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">HK ID</label>
+                                <label class="col-lg-4 control-label {{mustFill['HKID']}}">HK ID</label>
 
                                 <div class="col-lg-8">
                                     <div class="row">
@@ -119,7 +119,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Gender</label>
+                                <label class="col-lg-4 control-label {{mustFill['Gender']}}">Gender</label>
 
                                 <div class="col-lg-8">
                                     <label class="checkbox-inline">
@@ -138,7 +138,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Date Of Birth</label>
+                                <label class="col-lg-4 control-label {{mustFill['DOB']}}">Date Of Birth</label>
 
                                 <div class="col-lg-8">
                                     <div class="input-group date">
@@ -154,7 +154,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Age</label>
+                                <label class="col-lg-4 control-label {{mustFill['Age']}}">Age</label>
 
                                 <div class="col-lg-4">
                                     <input type="text" readonly class="form-control" ng-model="workerObj.Age" />
@@ -170,7 +170,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Address</label>
+                                <label class="col-lg-4 control-label {{mustFill['Address']}}">Address</label>
 
                                 <div class="col-lg-8">
                                     <textarea type="text" class="form-control" name="Address" ng-model="workerObj.Address"></textarea>
@@ -182,7 +182,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Phone No.</label>
+                                <label class="col-lg-4 control-label {{mustFill['PhoneNo']}}">Phone No.</label>
 
                                 <div class="col-lg-8">
                                     <input class="form-control" ng-model="workerObj.PhoneNo" />
@@ -196,7 +196,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Payroll Group</label>
+                                <label class="col-lg-4 control-label {{mustFill['PayrollGroup']}}">Payroll Group</label>
 
                                 <div class="col-lg-8">
                                     <ui-select ng-model="workerObj.PayrollGroup" name="PayrollGroup" theme="bootstrap" on-select="ui_select_change('PayrollGroup'); "
@@ -216,7 +216,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Payroll Remarks</label>
+                                <label class="col-lg-4 control-label {{mustFill['PayrollRemarks']}}">Payroll Remarks</label>
 
                                 <div class="col-lg-8">
                                     <input class="form-control" ng-model="workerObj.PayrollRemarks" />
@@ -230,7 +230,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Join Date</label>
+                                <label class="col-lg-4 control-label {{mustFill['DateJoin']}}">Join Date</label>
 
                                 <div class="col-lg-8">
 
@@ -247,7 +247,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Work Area</label>
+                                <label class="col-lg-4 control-label {{mustFill['WorkArea']}}">Work Area</label>
 
                                 <div class="col-lg-8">
                                     <input class="form-control" ng-model="workerObj.WorkArea" />
@@ -259,7 +259,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Bank Code</label>
+                                <label class="col-lg-4 control-label {{mustFill['BankCode']}}">Bank Code</label>
 
                                 <div class="col-lg-8">
                                     <input class="form-control" ng-model="workerObj.BankCode" />
@@ -270,7 +270,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Bank Name</label>
+                                <label class="col-lg-4 control-label {{mustFill['BankName']}}">Bank Name</label>
 
                                 <div class="col-lg-8">
                                     <input class="form-control" ng-model="workerObj.BankName" />
@@ -282,7 +282,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Bank Account No.</label>
+                                <label class="col-lg-4 control-label {{mustFill['BankACNo']}}">Bank Account No.</label>
 
                                 <div class="col-lg-8">
                                     <input class="form-control {{beneficialClass}}" ng-model="workerObj.BankACNo" />
@@ -294,7 +294,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Beneficial Name</label>
+                                <label class="col-lg-4 control-label {{mustFill['BeneficialName']}}">Beneficial Name</label>
 
                                 <div class="col-lg-8">
                                     <input class="form-control {{beneficialClass}}" ng-model="workerObj.BeneficialName" ng-blur="beneficialNameExists($event)" />
@@ -305,7 +305,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">District</label>
+                                <label class="col-lg-4 control-label {{mustFill['District']}}">District</label>
 
                                 <div class="col-lg-8">
                                     <!-- <input class="form-control" ng-model="workerObj.District" /> -->
@@ -325,7 +325,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Position Grade</label>
+                                <label class="col-lg-4 control-label {{mustFill['PositionGrade']}}">Position Grade</label>
 
                                 <div class="col-lg-8">
                                     <!-- <input class="form-control" ng-model="workerObj.PositionGrade" /> -->
@@ -346,7 +346,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Worker Status</label>
+                                <label class="col-lg-4 control-label {{mustFill['WorkerStatus']}}">Worker Status</label>
 
                                 <div class="col-lg-8">
 
@@ -369,7 +369,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Position</label>
+                                <label class="col-lg-4 control-label {{mustFill['Position']}}">Position</label>
 
                                 <div class="col-lg-8">
                                     <input class="form-control" ng-model="workerObj.Position" />
@@ -380,7 +380,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Appraisal Grade</label>
+                                <label class="col-lg-4 control-label {{mustFill['AppraisalGrade']}}">Appraisal Grade</label>
 
                                 <div class="col-lg-8">
 
@@ -400,7 +400,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Payroll Method</label>
+                                <label class="col-lg-4 control-label {{mustFill['PayrollMethod']}}">Payroll Method</label>
 
                                 <div class="col-lg-8">
 
@@ -421,7 +421,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Card Status</label>
+                                <label class="col-lg-4 control-label {{mustFill['CardStatus']}}">Card Status</label>
 
                                 <div class="col-lg-8">
                                     <!-- <input class="form-control" ng-model="workerObj.CardStatus" /> -->
@@ -443,12 +443,17 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label"></label>
+                                <label class="col-lg-4 control-label {{mustFill['ReturnDate']}}">Return Date</label>
 
-                                <div class="col-lg-8">
-                                    <label class="checkbox-inline">
-                                        <input icheck type="checkbox" name="MPFOption" ng-model="workerObj.MPFOption" value="F">&nbsp; 需要MPF?
-                                    </label>
+                                <div class="col-lg-8"> 
+
+                                    <div class="input-group date">
+                                        <input class="form-control" name="ReturnDate" ng-model="workerObj.ReturnDate" date-picker>
+                                        <a class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </a>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -460,7 +465,7 @@
                         <div class="col-lg-6">
 
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Remarks</label>
+                                <label class="col-lg-4 control-label {{mustFill['Remarks']}}">Remarks</label>
 
                                 <div class="col-lg-8">
                                     <textarea class="form-control" ng-model="workerObj.Remarks"></textarea>
@@ -468,7 +473,69 @@
                             </div>
 
                         </div>
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label {{mustFill['MPFOption']}}"></label>
+
+                                <div class="col-lg-8">
+                                    <label class="checkbox-inline">
+                                        <input icheck type="checkbox" name="MPFOption" ng-model="workerObj.MPFOption" value="F">&nbsp; 需要MPF?
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
+
+                    
+
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label {{mustFill['Remarks']}}">Create User</label>
+
+                                <div class="col-lg-8">
+                                    <div class="form-control" readonly>{{workerObj.CreateUser}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label {{mustFill['Remarks']}}">Create Date</label>
+
+                                <div class="col-lg-8">
+                                    <div class="form-control" readonly>{{workerObj.CreateDate}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+    
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label {{mustFill['Remarks']}}">Last Update User</label>
+    
+                                <div class="col-lg-8">
+                                    <div class="form-control" readonly>{{workerObj.LastModifyUser}}</div>
+                                </div>
+                            </div>
+    
+                        </div>
+                        <div class="col-lg-6">
+    
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label {{mustFill['Remarks']}}">Last Update Date</label>
+    
+                                <div class="col-lg-8">
+                                    <div class="form-control" readonly>{{workerObj.LastModifyDate}}</div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div> 
 
                     <div class="hr-line-dashed"></div>
 
@@ -507,12 +574,16 @@
                             <th width="20%">Client</th>
                             <th width="30%">BU</th>
                             <th>Staff No.</th>
+                            <th width="200px">Effective Start Date</th>
+                            <th width="200px">Effective End Date</th>
                             <th width="50px"></th>
                         </tr>
 
                         <tr ng-repeat="child in workerObj.ClientList track by $index">
                             <td>
-                                <ui-select ng-model="child.ClientCode" name="ClientCode" theme="bootstrap" on-select="ui_select_change('Client');" reset-search-input="false"
+                                <ui-select ng-model="child.ClientCode" name="ClientCode" theme="bootstrap" 
+                                on-select="ui_select_change('Client');SelectClient($index);;" 
+                                reset-search-input="false"
                                     title="Please Select">
                                     <ui-select-match placeholder="Please Select">{{$select.selected.Code}}</ui-select-match>
                                     <ui-select-choices repeat="item.Code as item in refresh_ui_select_list['Client'] track by $index" refresh="refresh_ui_select('Client', $select.search, 0, 1)"
@@ -524,7 +595,8 @@
                                 </ui-select>
                             </td>
                             <td>
-                                <ui-select ng-model="child.BU" name="BU" theme="bootstrap" on-select="ui_select_change('BU');" reset-search-input="false"
+                                <ui-select ng-model="child.BU" name="BU" theme="bootstrap" 
+                                on-select="SelectClient($index);;" reset-search-input="false"
                                     title="Please Select">
                                     <ui-select-match placeholder="Please Select">{{$select.selected.Desc}}</ui-select-match>
                                     <ui-select-choices repeat="item.Code as item in refresh_ui_select_list['BU' + child.ClientCode] track by $index" refresh="refresh_ui_select('BU', $select.search, 0, 1, undefined, child.ClientCode)"
@@ -536,7 +608,18 @@
                                 </ui-select>
                             </td>
                             <td>
-                                <input type="text" class="form-control" ng-model="child.StaffNo" />
+                                <input type="text" class="form-control" ng-model="child.StaffNo" ng-change="SelectClient($index);;" />
+                            </td>
+                            <td>
+                                <div style=" position: relative;">
+                                    <input type="text" date-picker class="form-control" ng-model="child.EffectiveFrom" ng-change="SelectClient($index);;" />
+                                </div>
+                            </td>
+                            <td>
+                                
+                                <div style=" position: relative;">
+                                    <input type="text" date-picker class="form-control" ng-model="child.EffectiveTo" ng-change="SelectClient($index);;" />
+                                </div>
                             </td>
                             <td class="td-btn text-danger" ng-click="removeChild(child, $index)">
                                 <span class="fa fa-trash"></span>
@@ -548,8 +631,83 @@
                         <i class="fa fa-plus"></i>&nbsp;Add</a>
                 </div>
 
+                <div class="hr-line-dashed"></div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <table class="table table-striped table-bordered inlineEditTable">
+                            <tr>
+                                <th>Payment Adjustment</th>
+                                <th>Update Date</th>
+                                <th width="50px;"></th>
+                            </tr>
+                            <tr ng-repeat="adjustment in workerObj.AdjustmentList">
+                                <td>
+                                    <input type="text" ui-number-mask class="form-control" ng-model="adjustment.AdjustAmount" />
+                                </td>
+                                <td>
+                                    <div class="form-control" readonly  >{{adjustment.UpdateDate}}</div> 
+                                </td>
+                                <td class="td-btn text-danger" ng-click="removeAdjustment($index, adjustment);">
+                                    <span ng-hide='adjustment.UpdateDate' class="fa fa-trash"></span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <a class="btn btn-default" ng-click="addAdjustment()">
+                            <i class="fa fa-plus">&nbsp Add</i>
+                        </a>
+                    </div>
+                </div>
 
 
+                <div class="hr-line-dashed"></div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <table class="table table-striped table-bordered inlineEditTable">
+                            <tr>
+                                <th>Attachment Type</th>
+                                <th>Attachment</th>
+                                <!-- <th>Update Date</th> -->
+                                <th width="50px;"></th>
+                            </tr>
+                            <tr ng-repeat="Attachment in workerObj.AttachmentList">
+                                <td>
+
+                                    <ui-select ng-model="Attachment.AttachmentType" title="Please select">
+                                        <ui-select-match placeholder="Please select">{{$select.selected.Desc}}</ui-select-match>
+                                        <ui-select-choices repeat="item.Code as item in generalMaster['AttachmentType'] track by $index">
+                                            <div>
+                                                <span ng-bind-html="item.Desc | highlight: $select.search"></span>
+                                            </div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </td>
+                                <td  ng-hide='Attachment.CreateDate' >  
+                                    <input type="file" class="form-control" required  
+                                    filename="Attachment.FileName"
+                                    fileread="Attachment.Content"
+                                    filemime="Attachment.MIME"
+                                    fileext="Attachment.Ext" />
+                                </td>
+                                <td ng-show='Attachment.CreateDate' > 
+                                    <a href="/HttpHandler/FileDownloadHandler.ashx?action=attachment&key={{workerObj.WorkerID}}_{{Attachment.RowNo}}">{{Attachment.FileName}}</a>
+                                </td>
+                                <!-- <td>
+                                    <div class="form-control" readonly  >{{Attachment.UpdateDate}}</div> 
+                                </td> -->
+                                <td class="td-btn text-danger" ng-click="removeAttachment($index, Attachment);">
+                                    <span ng-hide='Attachment.UpdateDate' class="fa fa-trash"></span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <a class="btn btn-default" ng-click="addAttachment()">
+                            <i class="fa fa-plus">&nbsp Add</i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 

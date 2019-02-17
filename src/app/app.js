@@ -74,6 +74,7 @@ angular.module('app', [uirouter, uibootstrap, angularsanitize, uiselect, datatab
     .directive('dateTime', directive.dateTime)
     .directive('datePicker', directive.datePicker)
     .directive('timePicker', directive.timePicker)
+    .directive('fileread', directive.fileread)
     .directive('workerInfo', directive.workerInfo)
     .directive('workerAttn', directive.workerAttn)
     .directive('workerPayroll', directive.workerPayroll)
@@ -107,6 +108,7 @@ angular.module('app', [uirouter, uibootstrap, angularsanitize, uiselect, datatab
     .controller("TimeslotMappingCtrl", ["$scope", "$http", "$document", "$timeout", "$rootScope", controller.TimeslotMappingCtrl])
     .controller("GeneralMasterCtrl", ["$scope", "$http", "$document", "$timeout", "$rootScope", controller.GeneralMasterCtrl])
     .controller("HolidayCtrl", ["$scope", "$http", "$document", "$timeout", "$rootScope", controller.HolidayCtrl])
+    .controller("PayrollExportCtrl", ["$scope", "$http", "$document", "$timeout", "$rootScope", "$state", controller.PayrollExportCtrl])
     //application begin
     .run(["$transitions", "$rootScope", function ($transitions, $rootScope) {
 

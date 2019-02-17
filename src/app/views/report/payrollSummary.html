@@ -23,7 +23,7 @@
                                 <div class="col-lg-6" ng-repeat="criteria in criterias">
 
                                     <div class="form-group">
-                                        <label class="col-lg-4 control-label">{{criteria.displayName}}</label>
+                                        <label class="col-lg-4 control-label">{{criteria.displayName}} dfg</label>
                                         <div class="col-lg-8">
 
                                             <input ng-model="criteria.value" class="form-control" date-picker ng-disabled="criteria.disable"
@@ -38,12 +38,12 @@
                                                        on-select="ui_select_change(criteria.table); clientIDChange();"
                                                        reset-search-input="false"
                                                        title="Please Select">
-                                                <ui-select-match placeholder="Please Select">{{$select.selected.Desc}}</ui-select-match>
+                                                <ui-select-match placeholder="Please Select">{{$select.selected.Code}}</ui-select-match>
                                                 <ui-select-choices repeat="item.Code as item in refresh_ui_select_list[criteria.table] track by $index"
                                                                    refresh="refresh_ui_select(criteria.table, $select.search, 0, 1)"
                                                                    refresh-delay="0">
                                                     <div>
-                                                        <span ng-bind-html="item.Desc | highlight: $select.search"></span>
+                                                        <span ng-bind-html="item.Code | highlight: $select.search"></span>
                                                     </div>
                                                 </ui-select-choices>
                                             </ui-select>

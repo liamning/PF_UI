@@ -10,7 +10,7 @@ const host = window.host;
 
 const getCheckDigitNumber = function (letter) {
     var result = letter.charCodeAt(0) - 55;
-    if(result < 10) return letter;
+    if (result < 10) return letter;
     return result;
 }
 
@@ -54,6 +54,7 @@ const hkIDCheckDigit = function (hkID) {
     }
 
     checkDigitCal = 11 - checkDigitCal % 11;
+    checkDigitCal = checkDigitCal % 11;
 
     console.log(`${checkDigitCal} = ${checkDigit}`);
 
@@ -88,38 +89,38 @@ export function MainCtrl($scope, $state, $http, $rootScope) {
 
             if (response) {
                 $scope.refresh_ui_select_list[table] = response;
-                
-                var exists =  false;
-                if(response && defaultInput){ 
-                    for(var i=0, item;item = response[i]; i++){
-                        if(item.Code == defaultInput){
+
+                var exists = false;
+                if (response && defaultInput) {
+                    for (var i = 0, item; item = response[i]; i++) {
+                        if (item.Code == defaultInput) {
                             exists = true;
                             break;
                         }
                     }
-                    if(!exists){ 
-                        if(defaultInput == "All"){
+                    if (!exists) {
+                        if (defaultInput == "All") {
                             response.unshift({
                                 'Code': '',
                                 'Desc': 'All',
                             });
-                        }else 
-                        response.unshift({
-                            'Code': defaultInput,
-                            'Desc': defaultInput,
-                        });
+                        } else
+                            response.unshift({
+                                'Code': defaultInput,
+                                'Desc': defaultInput,
+                            });
                     }
                 }
 
-                if (response && input && includeInput){
-                    exists =  false;
-                    for(var i=0, item;item = response[i]; i++){
-                        if(item.Code == input){
+                if (response && input && includeInput) {
+                    exists = false;
+                    for (var i = 0, item; item = response[i]; i++) {
+                        if (item.Code == input) {
                             exists = true;
                             break;
                         }
                     }
-                    if(!exists){ 
+                    if (!exists) {
                         response.unshift({
                             'Code': input,
                             'Desc': input,
@@ -161,7 +162,7 @@ export function MainCtrl($scope, $state, $http, $rootScope) {
                 for (pro in response) {
                     if ($scope.generalMaster[pro]) $scope.generalMaster[pro].length = 0;
                     $scope.generalMaster[pro] = response[pro];
-                    if(defaultInput == "All"){
+                    if (defaultInput == "All") {
                         $scope.generalMaster[pro].unshift({
                             Code: '',
                             Desc: "All"
@@ -613,6 +614,7 @@ export function WorkerCtrl($scope, $http, $document, $timeout, $rootScope, $stat
 
     //object initialization
     (function () {
+        $scope.ClientObjIndex = 0;
         $scope.workerObj = {
             WorkerID: $rootScope.loginInfo.WorkerID,
         };
@@ -632,7 +634,16 @@ export function WorkerCtrl($scope, $http, $document, $timeout, $rootScope, $stat
         };
         $scope.tabURL = 'Info';
 
-        $scope.getGeneralMasterList(["WorkerType", "PositionGrade", "WorkerStatus", "AppraisalGrade", "CardStatus", "District", "PayrollMethod"]);
+        $scope.getGeneralMasterList(["WorkerType", "PositionGrade", "WorkerStatus", "AppraisalGrade", "CardStatus", "District", "PayrollMethod", "AttachmentType"]);
+
+        $scope.mustFill = {
+            WorkerID: 'mustFill',
+            HKID: 'mustFill',
+            Gender: 'mustFill',
+            DOB: 'mustFill',
+            PayrollGroup: 'mustFill',
+            PositionGrade: 'mustFill',
+        };
 
     })();
 
@@ -655,17 +666,17 @@ export function WorkerCtrl($scope, $http, $document, $timeout, $rootScope, $stat
                     $scope.refresh_ui_select_list[table + clientCode] = response;
                 else
                     $scope.refresh_ui_select_list[table] = response;
-                
-                    
-                var exists =  false;
-                if(response && defaultInput){ 
-                    for(var i=0, item;item = response[i]; i++){
-                        if(item.Code == defaultInput){
+
+
+                var exists = false;
+                if (response && defaultInput) {
+                    for (var i = 0, item; item = response[i]; i++) {
+                        if (item.Code == defaultInput) {
                             exists = true;
                             break;
                         }
                     }
-                    if(!exists){ 
+                    if (!exists) {
                         response.unshift({
                             'Code': defaultInput,
                             'Desc': defaultInput,
@@ -673,15 +684,15 @@ export function WorkerCtrl($scope, $http, $document, $timeout, $rootScope, $stat
                     }
                 }
 
-                if (response && input && includeInput){
-                    exists =  false;
-                    for(var i=0, item;item = response[i]; i++){
-                        if(item.Code == input){
+                if (response && input && includeInput) {
+                    exists = false;
+                    for (var i = 0, item; item = response[i]; i++) {
+                        if (item.Code == input) {
                             exists = true;
                             break;
                         }
                     }
-                    if(!exists){ 
+                    if (!exists) {
                         response.unshift({
                             'Code': input,
                             'Desc': input,
@@ -751,6 +762,8 @@ export function WorkerCtrl($scope, $http, $document, $timeout, $rootScope, $stat
         var hkid = $scope.workerObj.HKID1 + $scope.workerObj.HKID2 + $scope.workerObj.HKID3;
         if (!hkIDCheckDigit(hkid)) return;
 
+        if(!$scope.validate()) return;
+
         $scope.postToServer({
             data: [{
                 action: "saveWorker",
@@ -758,6 +771,8 @@ export function WorkerCtrl($scope, $http, $document, $timeout, $rootScope, $stat
             }],
             callback: function (response) {
                 ////console.log(response);
+                $scope.workerObj.WorkerID = response["saveWorker"].WorkerID;
+                $scope.refresh_ui_select('Worker',$scope.workerObj.WorkerID, 0);
                 alert(response["saveWorker"].message);
             }
         });
@@ -790,6 +805,39 @@ export function WorkerCtrl($scope, $http, $document, $timeout, $rootScope, $stat
     $scope.removeSkill = function ($index) {
         $scope.workerObj.SkillList.splice($index, 1);
     }
+
+    
+
+    $scope.addAdjustment = function () {
+
+        if (!$scope.workerObj.AdjustmentList) $scope.workerObj.AdjustmentList = [];
+        var rowNo = $scope.workerObj.AdjustmentList.length + 1;
+        $scope.workerObj.AdjustmentList.push({
+            RowNo: rowNo
+        });
+    }
+    $scope.removeAdjustment = function ($index, $adjustment) {
+        if($adjustment.UpdateDate) return;
+        $scope.workerObj.AdjustmentList.splice($index, 1);
+    }
+
+    
+
+    $scope.addAttachment = function () {
+
+        if (!$scope.workerObj.AttachmentList) $scope.workerObj.AttachmentList = [];
+        var rowNo = 1;
+        if($scope.workerObj.AttachmentList.length) rowNo = $scope.workerObj.AttachmentList[$scope.workerObj.AttachmentList.length - 1].RowNo + 1;
+         
+        $scope.workerObj.AttachmentList.push({
+            RowNo: rowNo
+        });
+    }
+    $scope.removeAttachment = function ($index, $Attachment) {
+        
+        $scope.workerObj.AttachmentList.splice($index, 1);
+    }
+
     //event 
     $scope.addChild = function () {
         if (!$scope.workerObj.ClientList)
@@ -802,7 +850,8 @@ export function WorkerCtrl($scope, $http, $document, $timeout, $rootScope, $stat
     }
 
     $scope.removeChild = function (child, $index) {
-        $scope.workerObj.ClientList.splice($index, 1);
+        $scope.workerObj.ClientList.splice($index, 1); 
+        delete $scope.ClientError[$index];
     }
 
     $scope.$watch('workerObj.DOB', function (newval, oldval) {
@@ -810,6 +859,80 @@ export function WorkerCtrl($scope, $http, $document, $timeout, $rootScope, $stat
         var dateOfBirth = moment($scope.workerObj.DOB, 'DD/MM/YYYY HH:mm:ss').toDate();
         $scope.workerObj.Age = parseInt(moment().diff(dateOfBirth, 'years', true)) + 1;
     }, true);
+
+    $scope.ClientError = {};
+    $scope.checkStaffNoDuplicated = function(clientObj) {
+
+        if( !clientObj.EffectiveFrom || !clientObj.EffectiveTo || !clientObj.StaffNo ||  !clientObj.ClientCode ||
+            clientObj.EffectiveFrom.length < 19 || clientObj.EffectiveTo.length < 19) return;
+         
+
+        console.log("clientObj", clientObj);
+
+        var result = false;
+        $scope.workerObj.ClientList.forEach((ele, index)=>{
+            if(index == $scope.ClientObjIndex
+                || clientObj.StaffNo != ele.StaffNo
+                || clientObj.ClientCode != ele.ClientCode
+                || moment(clientObj.EffectiveFrom, "DD/MM/YYYY HH:mm:ss") > moment(ele.EffectiveTo, "DD/MM/YYYY HH:mm:ss")
+                || moment(clientObj.EffectiveTo, "DD/MM/YYYY HH:mm:ss") < moment(ele.EffectiveFrom, "DD/MM/YYYY HH:mm:ss")
+            ) return
+ 
+            result = true;
+            return false;
+        })
+        if(result) {
+            alert(`Staff No. overlaps`);
+            $scope.ClientError[$scope.ClientObjIndex] = `Staff No. overlaps`;
+            return;
+        } else {
+            delete $scope.ClientError[$scope.ClientObjIndex];
+        }
+
+        
+        $scope.postToServer({
+            data: [{
+                action: "isStaffNoDuplicated",
+                WorkerClientListInfo: JSON.stringify(clientObj)
+            }],
+            callback: function (response) {
+                console.log(response);
+                if(response["isStaffNoDuplicated"].message){
+                    alert(response["isStaffNoDuplicated"].message);
+                    $scope.ClientError[$scope.ClientObjIndex] = response["isStaffNoDuplicated"].message;
+                } else {
+                    delete $scope.ClientError[$scope.ClientObjIndex];
+                }
+            }
+        }); 
+    }
+
+    $scope.validate = function(){
+        for(var index in $scope.ClientError)
+        {
+            if($scope.ClientError[index])
+            {
+                alert($scope.ClientError[index]);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    
+    $scope.SelectClient = function($index) {
+        $scope.ClientObjIndex = $index;
+
+    }
+
+    $scope.$watch('workerObj.ClientList', function (newVal, oldVal) {
+   
+
+        if (!newVal || !oldVal || newVal.length != oldVal.length) return;
+        $scope.checkStaffNoDuplicated(newVal[$scope.ClientObjIndex]);
+
+    }, true);
+ 
 
     if ($scope.workerObj.WorkerID) {
         $scope.workerIDChange();
@@ -975,7 +1098,8 @@ export function AttendanceImportCtrl($scope, $http, $document, $timeout, $rootSc
             headers: { 'Content-Type': undefined }
         }).then(function (response) {
             response = response.data;
-            $scope.result = response;
+            if(response.message) alert(response.message);
+            else $scope.result = response;
         });
     };
 
@@ -1270,7 +1394,7 @@ export function InquiryCtrl($scope, $http, $document, $timeout, $rootScope, $sta
             field: 'WorkArea.Like',
             value: '',
         },
-        
+
         {
             displayName: "PayrollGroup",
             field: 'PayrollGroup.Value',
@@ -1323,7 +1447,19 @@ export function InquiryCtrl($scope, $http, $document, $timeout, $rootScope, $sta
         {
             displayName: "Skill",
             field: 'Skill.Like',
-            value: '', 
+            value: '',
+        },
+        {
+            displayName: "Client Code",
+            field: 'ClientCode.Value',
+            type: 'select', 
+            table: 'Client',
+            value: '',
+        },
+        {
+            displayName: "Staff No",
+            field: 'StaffNo.Like',
+            value: '',
         },];
 
         $scope.view = "V_Worker";
@@ -1446,7 +1582,14 @@ export function AttendanceExportCtrl($scope, $http, $document, $timeout, $rootSc
                 field: 'AttendanceDate.EndDate',
                 value: moment().format("DD/MM/YYYY HH:mm:ss"),
                 type: 'date',
-            }
+            },
+            {
+                displayName: "Payroll Group",
+                field: 'PayrollGroup.Value',
+                value: '',
+                type: 'select',
+                table: 'PayrollGroup',
+            },
         ];
 
         $scope.view = "V_Attendance";
@@ -1487,6 +1630,96 @@ export function AttendanceExportCtrl($scope, $http, $document, $timeout, $rootSc
 
             }
         });
+
+
+    }
+
+}
+
+export function PayrollExportCtrl($scope, $http, $document, $timeout, $rootScope, $state) {
+
+    var vm = this;
+
+    //object initialization
+    (function () {
+        $scope.inquiryObj = {
+        };
+
+        $scope.templateURL = {
+            name: "Payroll Export",
+            url: 'views/report/Payroll.html',
+            pageNo: 0
+        };
+
+        $scope.viewsList = [];
+        $scope.viewsList[$scope.templateURL.pageNo] = {
+            name: $scope.templateURL.name,
+            url: $scope.templateURL.url
+        };
+        //$scope.header = ["Worker ID", "Chinese Name", "English Name", "Phone No", "HK ID", "Gender", "Introducer", "Work Area", "Address"];
+        $scope.criterias = [
+            {
+                displayName: "員工編號",
+                field: 'WorkerID.StartString',
+                value: '',
+                type: 'select',
+                table: 'Worker',
+            },
+            {
+                displayName: "員工編號",
+                field: 'WorkerID.EndString',
+                value: '',
+                type: 'select',
+                table: 'Worker',
+            },
+            {
+                displayName: "Salary Date From",
+                field: 'SalaryDate.StartDate',
+                value: moment().format("DD/MM/YYYY HH:mm:ss"),
+                type: 'date',
+            },
+            {
+                displayName: "Salary Date To",
+                field: 'SalaryDate.EndDate',
+                value: moment().format("DD/MM/YYYY HH:mm:ss"),
+                type: 'date',
+            },
+            {
+                displayName: "Payroll Group",
+                field: 'PayrollGroup.Value',
+                value: '',
+                type: 'select',
+                table: 'PayrollGroup',
+            },
+        ];
+
+        $scope.view = "V_Payroll";
+
+
+    })();
+
+
+    $scope.reset = function () {
+
+        for (var i = 0, item; item = $scope.criterias[i]; i++) {
+            item.value = '';
+        }
+    }
+
+    $scope.search = function () {
+        var filters = [];
+        var tmp;
+        for (var i = 0, item; item = $scope.criterias[i]; i++) {
+            if (item.value) {
+                tmp = {};
+                tmp[item.field] = item.value;
+                filters.push(tmp);
+            }
+        }
+        if (!filters.length) return;
+
+        window.location = host + "/HttpHandler/FileDownloadHandler.ashx?action=payroll&View=" + $scope.view + "&Filters=" + JSON.stringify(filters); return;
+         
 
 
     }
@@ -1717,6 +1950,9 @@ export function PayrollGenerationCtrl($scope, $http, $document, $timeout, $rootS
                 action: "generatePayroll",
                 AsAt: $scope.payrollObj.AsAt,
                 SalaryDate: $scope.payrollObj.SalaryDate,
+                BonusDayCount: $scope.payrollObj.BonusDayCount,
+                TotalBonusHours: $scope.payrollObj.TotalBonusHours,
+                BonusAmount: $scope.payrollObj.BonusAmount,
                 Remarks: ($scope.payrollObj.Remarks || ''),
                 PayrollGroup: $scope.payrollObj.PayrollGroup,
                 //WorkerID: $scope.workerObj.WorkerID,
@@ -1909,9 +2145,12 @@ export function TimeslotMappingCtrl($scope, $http, $document, $timeout, $rootSco
         if (!$scope.timeslotMapping)
             $scope.timeslotMapping = [];
 
-        var rowNo = $scope.timeslotMapping.length + 1;
+        var rowNo = 0;
+        $scope.timeslotMapping.forEach(ele => {
+            rowNo = Math.max(ele.RowNo, rowNo);
+        });
         $scope.timeslotMapping.push({
-            RowNo: rowNo
+            RowNo: rowNo + 1
         });
 
     }

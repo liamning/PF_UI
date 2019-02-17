@@ -222,8 +222,8 @@ export function uiNumberMask($filter) {
             });
 
             ngModelCtrl.$parsers.push(function (val) {
-                var clean = val.replace(/[^0-9|\.]/g, '');
-                var res = clean.match(/\d+\.?\d{0,2}/g);
+                var clean = val.replace(/[^0-9|\.|\-]/g, '');
+                var res = clean.match(/\-?\d+\.?\d{0,2}/g);
 
                 if (res && res[0])
                     clean = res[0];
@@ -520,9 +520,16 @@ export function datePicker() {
             element.on('blur', function () {
 
                 if (element.val()) {
-                    //console.log("blur");
+                    console.log("blur");
                     ngModelCtrl.$setViewValue(element.val() + " 00:00:00");
                 }
+
+            })
+
+            
+            element.on('change', function () {
+
+                console.log("change", element.val());
 
             })
 
@@ -630,4 +637,29 @@ export function icheck($timeout) {
 //Added by Ning  ---End
 
 
+export function fileread() {
+    return {
+        scope: {
+            fileread: "=", 
+            fileext: "=",
+            filename: "=",
+            filemime: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader();
+                reader.onload = function (loadEvent) {
+                    scope.$apply(function () {
+                        var tmp = loadEvent.target.result.split("base64,");
+                        scope.filename = changeEvent.target.files[0].name;
+                        scope.filemime = tmp[0].substring(5, tmp[0].length-1);
+                        scope.fileread = tmp[1];
+                        scope.fileext = changeEvent.target.files[0].name.substr(changeEvent.target.files[0].name.lastIndexOf('.'));
+                    });
+                }
+                reader.readAsDataURL(changeEvent.target.files[0]);
+            });
+        }
+    }
+}
 

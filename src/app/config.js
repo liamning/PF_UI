@@ -69,6 +69,14 @@ export default function config($stateProvider, $urlRouterProvider) {
             url: "/attendance",
             template: require("./views/report/attendance.html"),
         })
+        .state('index.report.payroll', {
+            url: "/payroll",
+            template: require("./views/report/payroll.html"),
+        })
+        .state('index.report.payrollSummary', {
+            url: "/payrollSummary",
+            template: require("./views/report/payrollSummary.html"),
+        })
         .state('index.import.TimeslotMapping', {
             url: "/TimeslotMapping",
             template: require("./views/import/TimeslotMapping.html"),

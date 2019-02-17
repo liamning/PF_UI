@@ -87,18 +87,22 @@
 
                             <tr>
                                 <th>Salary Date</th>
+                                <th>As at</th>
                                 <th>Pay from</th>
                                 <th>Pay To</th>
                                 <th>Total Hours</th>
                                 <th>OT Hours</th>
+                                <th>Actual Total Bonus Hour</th>
                                 <th>Total Amount</th>
                             </tr>
                             <tr ng-repeat="item in payrollObj track by $index">
                                 <td>{{item.SalaryDate}}</td>
+                                <td>{{item.Asat}}</td>
                                 <td>{{item.PayFrom}}</td>
                                 <td>{{item.PayTo}}</td>
                                 <td>{{item.Hours}}</td>
                                 <td>{{item.OTHours}}</td>
+                                <td>{{item.Last30DayTotal}}</td>
                                 <td align="right">{{item.Amount | currency: ' '}}</td>
                             </tr>
                         </table>
